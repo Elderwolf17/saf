@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sintetizador de Voz</title>
+    <style>
+        #text-input {
+            width: 400px;
+            height: 100px;
+        }
+
+        #speed-buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="text-input" placeholder="Digite o texto"></textarea>
+    <div id="speed-buttons">
+        <button onclick="decreaseSpeed()">Diminuir Velocidade</button>
+        <button onclick="increaseSpeed()">Aumentar Velocidade</button>
+    </div>
+    <button onclick="speakText()">Ler Texto</button>
+
+    <script>
+        let voiceSpeed = 1.0; // Velocidade inicial da voz
+
+        function speakText() {
+            const textInput = document.getElementById('text-input').value;
+
+            // Verificar se o navegador suporta sintetizador de voz
+            if ('speechSynthesis' in window) {
+                const speech = new SpeechSynthesisUtterance(textInput);
+                speech.rate = voiceSpeed; // Definir a velocidade da voz
+                window.speechSynthesis.speak(speech);
+            } else {
+                alert('Desculpe, seu navegador não suporta o sintetizador de voz.');
+            }
+        }
+
+        function increaseSpeed() {
+            voiceSpeed += 0.1; // Incrementar a velocidade em 0.1
+        }
+
+        function decreaseSpeed() {
+            if (voiceSpeed > 0.1) {
+                voiceSpeed -= 0.1; // Diminuir a velocidade em 0.1, mínimo 0.1
+            }
+        }
+    </script>
+</body>
+</html>
